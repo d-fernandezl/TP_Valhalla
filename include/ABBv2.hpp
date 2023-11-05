@@ -102,3 +102,74 @@ public:
 };
 
 #endif
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+ABB<T, menor, igual>::ABB() {
+    raiz = nullptr;
+    cantidad_datos = 0;
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+void ABB<T, menor, igual>::alta(T dato) {
+    if (vacio()) {
+        raiz = new NodoABB<T, menor, igual>;
+        raiz -> dato = dato;
+        raiz -> padre = nullptr;
+        raiz -> hijo_izquierdo = nullptr;
+        raiz -> hijo_derecho = nullptr;
+        cantidad_datos ++;
+    } else if (igual(dato, raiz -> dato)) {
+        throw ABB_exception();
+    } else if (menor(dato, raiz -> dato)) {
+        if (raiz -> hijo_izquierdo == nullptr) {
+            raiz -> hijo_izquierdo = new NodoABB<T, menor, igual>;
+            (raiz -> hijo_izquierdo) -> dato = dato;
+            (raiz -> hijo_izquierdo) -> padre = raiz;
+            (raiz -> hijo_izquierdo) -> hijo_izquierdo = nullptr;
+            (raiz -> hijo_izquierdo) -> hijo_derecho = nullptr;
+            cantidad_datos ++;
+        } else {
+            alta(dato, raiz -> hijo_izquierdo);
+        }
+    } else {
+        if (raiz -> hijo_derecho == nullptr) {
+            raiz -> hijo_derecho = new NodoABB<T, menor, igual>;
+            (raiz -> hijo_derecho) -> dato = dato;
+            (raiz -> hijo_derecho) -> padre = raiz;
+            (raiz -> hijo_derecho) -> hijo_izquierdo = nullptr;
+            (raiz -> hijo_derecho) -> hijo_derecho = nullptr;
+            cantidad_datos ++;
+        } else {
+            alta(dato, raiz -> hijo_derecho);
+        }
+    }
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+void ABB<T, menor, igual>::alta(T dato, NodoABB<T, menor, igual>* nodo_actual) {
+    if (igual(dato, nodo_actual -> dato)) {
+        throw ABB_exception();
+    } else if (menor(dato, nodo_actual -> dato)) {
+        if (nodo_actual -> hijo_izquierdo == nullptr) {
+            nodo_actual -> hijo_izquierdo = new NodoABB<T, menor, igual>;
+            (nodo_actual -> hijo_izquierdo) -> padre = nodo_actual;
+            (nodo_actual -> hijo_izquierdo) -> dato = dato;
+            (nodo_actual -> hijo_izquierdo) -> hijo_izquierdo = nullptr;
+            (nodo_actual -> hijo_izquierdo) -> hijo_derecho = nullptr;
+            cantidad_datos ++;
+        } else {
+            alta(dato, nodo_actual -> hijo_izquierdo); 
+        }
+    } else {
+        if (nodo_actual -> hijo_derecho == nullptr) {
+            nodo_actual -> hijo_derecho = new NodoABB<T, menor, igual>;
+            (nodo_actual -> hijo_derecho) -> padre = nodo_actual;
+            (nodo_actual -> hijo_derecho) -> dato = dato;
+            (nodo_actual -> hijo_derecho) -> hijo_izquierdo = nullptr;
+            (nodo_actual -> hijo_derecho) -> hijo_derecho = nullptr;
+            cantidad_datos ++;
+        } else {
+            alta(dato, nodo_actual -> hijo_derecho); 
+        }
+    }
+}
