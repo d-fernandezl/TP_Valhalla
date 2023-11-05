@@ -4,14 +4,15 @@ Trabajo Práctico Grupal de Algoritmos y Programación 2 2c2023.
 
 ### Integrantes del grupo NOMBRE_GRUPO:
 
-1. APELLIDO, Nombre - Padron - Mail_FIUBA
-2. APELLIDO, Nombre - Padron - Mail_FIUBA
-3. APELLIDO, Nombre - Padron - Mail_FIUBA
-4. APELLIDO, Nombre - Padron - Mail_FIUBA
+1. MENDOZA, Aksel Ezequiel - 108171 - aemendoza@fi.uba.ar
+2. TEJADA RAMIREZ, Aaron Christopher - 109187 - ctejada@fi.uba.ar
+3. SOLES RUIZ, Diego Nahuel - 109638 - dsoles@fi.uba.ar
+4. FERNANDEZ LAURA, Daniela - 110344 - dfernandezl@fi.uba.ar
+
 
 ### Corrector asignado:
 
-CORRECTOR
+Nicolas Marianetti
 
 ## Compilación:
 
