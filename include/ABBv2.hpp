@@ -43,6 +43,14 @@ private:
     // Post: Ejecuta el método/función en el subárbol.
     void ejecutar(void metodo(T), NodoABB<T, menor, igual>* nodo_actual);
 
+    // Pre: -
+    // Post: Inicializa los atributos del nodo.       
+    void inicializar_nodo(NodoABB<T, menor, igual>* nodo, T dato, NodoABB<T, menor, igual>* padre);
+
+    // Pre: -
+    // Post: Libera la memoria de los nodos.       
+    void liberar_memoria(NodoABB<T, menor, igual>* nodo_actual);
+
 public:
     // Constructor.
     ABB();
@@ -109,24 +117,26 @@ ABB<T, menor, igual>::ABB() {
     cantidad_datos = 0;
 }
 
-template<typename T, bool menor(T, T), bool igual(T, T)>
+template<typename T, bool menor(T, T), bool igual(T, T)>        
+void ABB<T, menor, igual>::inicializar_nodo(NodoABB<T, menor, igual>* nodo, T dato, NodoABB<T, menor, igual>* padre) {
+    nodo -> dato = dato;
+    nodo -> padre = padre;
+    nodo -> hijo_izquierdo = nullptr;
+    nodo -> hijo_derecho = nullptr;
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>         
 void ABB<T, menor, igual>::alta(T dato) {
     if (vacio()) {
         raiz = new NodoABB<T, menor, igual>;
-        raiz -> dato = dato;
-        raiz -> padre = nullptr;
-        raiz -> hijo_izquierdo = nullptr;
-        raiz -> hijo_derecho = nullptr;
+        inicializar_nodo(raiz, dato, nullptr);
         cantidad_datos ++;
     } else if (igual(dato, raiz -> dato)) {
         throw ABB_exception();
     } else if (menor(dato, raiz -> dato)) {
         if (raiz -> hijo_izquierdo == nullptr) {
             raiz -> hijo_izquierdo = new NodoABB<T, menor, igual>;
-            (raiz -> hijo_izquierdo) -> dato = dato;
-            (raiz -> hijo_izquierdo) -> padre = raiz;
-            (raiz -> hijo_izquierdo) -> hijo_izquierdo = nullptr;
-            (raiz -> hijo_izquierdo) -> hijo_derecho = nullptr;
+            inicializar_nodo(raiz -> hijo_izquierdo, dato, raiz);
             cantidad_datos ++;
         } else {
             alta(dato, raiz -> hijo_izquierdo);
@@ -134,10 +144,7 @@ void ABB<T, menor, igual>::alta(T dato) {
     } else {
         if (raiz -> hijo_derecho == nullptr) {
             raiz -> hijo_derecho = new NodoABB<T, menor, igual>;
-            (raiz -> hijo_derecho) -> dato = dato;
-            (raiz -> hijo_derecho) -> padre = raiz;
-            (raiz -> hijo_derecho) -> hijo_izquierdo = nullptr;
-            (raiz -> hijo_derecho) -> hijo_derecho = nullptr;
+            inicializar_nodo(raiz -> hijo_derecho, dato, raiz);
             cantidad_datos ++;
         } else {
             alta(dato, raiz -> hijo_derecho);
@@ -145,17 +152,14 @@ void ABB<T, menor, igual>::alta(T dato) {
     }
 }
 
-template<typename T, bool menor(T, T), bool igual(T, T)>
+template<typename T, bool menor(T, T), bool igual(T, T)>             
 void ABB<T, menor, igual>::alta(T dato, NodoABB<T, menor, igual>* nodo_actual) {
     if (igual(dato, nodo_actual -> dato)) {
         throw ABB_exception();
     } else if (menor(dato, nodo_actual -> dato)) {
         if (nodo_actual -> hijo_izquierdo == nullptr) {
             nodo_actual -> hijo_izquierdo = new NodoABB<T, menor, igual>;
-            (nodo_actual -> hijo_izquierdo) -> padre = nodo_actual;
-            (nodo_actual -> hijo_izquierdo) -> dato = dato;
-            (nodo_actual -> hijo_izquierdo) -> hijo_izquierdo = nullptr;
-            (nodo_actual -> hijo_izquierdo) -> hijo_derecho = nullptr;
+            inicializar_nodo(nodo_actual -> hijo_izquierdo, dato, nodo_actual);
             cantidad_datos ++;
         } else {
             alta(dato, nodo_actual -> hijo_izquierdo); 
@@ -163,13 +167,26 @@ void ABB<T, menor, igual>::alta(T dato, NodoABB<T, menor, igual>* nodo_actual) {
     } else {
         if (nodo_actual -> hijo_derecho == nullptr) {
             nodo_actual -> hijo_derecho = new NodoABB<T, menor, igual>;
-            (nodo_actual -> hijo_derecho) -> padre = nodo_actual;
-            (nodo_actual -> hijo_derecho) -> dato = dato;
-            (nodo_actual -> hijo_derecho) -> hijo_izquierdo = nullptr;
-            (nodo_actual -> hijo_derecho) -> hijo_derecho = nullptr;
+            inicializar_nodo(nodo_actual -> hijo_derecho, dato, nodo_actual);
             cantidad_datos ++;
         } else {
             alta(dato, nodo_actual -> hijo_derecho); 
         }
     }
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>    
+void ABB<T, menor, igual>::liberar_memoria(NodoABB<T, menor, igual>* nodo_actual) {
+    if (nodo_actual -> hijo_izquierdo != nullptr) {
+        liberar_memoria(nodo_actual -> hijo_izquierdo);
+    }
+    if (nodo_actual -> hijo_derecho != nullptr) {
+        liberar_memoria(nodo_actual -> hijo_derecho);
+    }
+    delete nodo_actual;
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>       
+ABB<T, menor, igual>::~ABB() {
+    liberar_memoria(raiz);
 }
