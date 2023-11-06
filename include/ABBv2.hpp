@@ -111,6 +111,7 @@ public:
 
 #endif
 
+
 template<typename T, bool menor(T, T), bool igual(T, T)>
 ABB<T, menor, igual>::ABB() {
     raiz = nullptr;
