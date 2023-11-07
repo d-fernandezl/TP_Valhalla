@@ -1,5 +1,6 @@
 #include <iostream>
 #include "ABBv2.hpp"
+#include "Placa.hpp"
 
 using namespace std;
 
@@ -16,10 +17,22 @@ int main()
     arbolito.alta(20);
     arbolito.alta(15);
     arbolito.alta(18);
+
+    /*12 8 11 9 20 15 18*/
+    /* 12 8 20 11 9*/
+    /*
     vector<int> numeros = arbolito.postorder();
     for (size_t i = 0; i < arbolito.tamanio(); i++) {
         cout << numeros[i] << " ";
     }
+    */
+    vector<int> vect = arbolito.ancho();
+    
+    for(size_t i=0;i<arbolito.tamanio();i++){
+        cout<<vect[i]<<endl;
+    }
+    
+
     return 0;
 }
 

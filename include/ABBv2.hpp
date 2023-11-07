@@ -3,6 +3,7 @@
 
 #include <exception>
 #include "NodoABBv2.hpp"
+#include <iostream>
 
 class ABB_exception : public std::exception {
 };
@@ -50,6 +51,7 @@ private:
     // Pre: -
     // Post: Libera la memoria de los nodos.       
     void liberar_memoria(NodoABB<T, menor, igual>* nodo_actual);
+
 
 public:
     // Constructor.
@@ -108,9 +110,6 @@ public:
     // Destructor.
     ~ABB();
 };
-
-#endif
-
 
 template<typename T, bool menor(T, T), bool igual(T, T)>
 ABB<T, menor, igual>::ABB() {
@@ -191,3 +190,77 @@ template<typename T, bool menor(T, T), bool igual(T, T)>
 ABB<T, menor, igual>::~ABB() {
     liberar_memoria(raiz);
 }
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+bool ABB<T, menor, igual>::vacio(){
+    return (cantidad_datos==0);
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+std::size_t ABB<T,menor,igual>::tamanio(){
+    return cantidad_datos;
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+bool ABB<T,menor,igual>::consulta(T dato){ /*Metodo Publico*/
+    bool encontrado=false;
+    if(raiz == nullptr){
+        encontrado = false;
+    }else{
+        if(igual(dato,raiz->dato)){
+            encontrado = true;
+        }else{
+            if(menor(dato,raiz->dato)){
+                encontrado = consulta(dato,raiz->hijo_izquierdo);
+            }else{
+                encontrado = consulta(dato,raiz->hijo_derecho);
+            }
+        }
+    }
+    return encontrado;
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+bool ABB<T,menor,igual>::consulta(T dato, NodoABB<T, menor, igual>* nodo_actual){ /*Metodo Privado*/
+    bool encontrado = false;
+    if(nodo_actual == nullptr){
+        encontrado = false;
+    }else{
+        if(igual(dato,nodo_actual->dato)){
+            encontrado = true;
+        }else{
+            if(menor(dato,nodo_actual->dato)){
+                encontrado = consulta(dato,nodo_actual->hijo_izquierdo);
+            }else{
+                encontrado = consulta(dato,nodo_actual->hijo_derecho);
+            }
+        }
+    }
+    return encontrado;
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+std::vector<T> ABB<T,menor,igual>::ancho(){
+    std::queue<NodoABB<T,menor,igual>> cola;
+    std::vector<T> vect;
+
+    if(raiz==nullptr){
+        throw ABB_exception();
+    }else{
+        cola.push(*raiz);
+        while(!cola.empty()){
+            NodoABB<T,menor,igual> actual = cola.front();
+            cola.pop();
+            vect.push_back(actual.dato);
+            if(actual.hijo_izquierdo!=nullptr){
+                cola.push(*actual.hijo_izquierdo);
+            }
+            if(actual.hijo_derecho!=nullptr){
+                cola.push(*actual.hijo_derecho);
+            }
+        }
+    }
+    return vect;
+}
+
+#endif
