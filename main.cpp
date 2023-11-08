@@ -33,6 +33,23 @@ int main()
     }
     
 
+    // Prueba de preorder
+    vector<int> datos_preorder = arbolito.preorder();
+    cout << "Recorrido de Preorder:" << endl;
+    for (int dato: datos_preorder) {
+        cout << dato << " ";
+    }
+    cout << endl;
+
+    // Prueba de postorder
+    vector<int> datos_postorder = arbolito.postorder();
+    cout << "Recorrido de postorder:" << endl;
+    for (int dato1: datos_postorder) {
+        cout << dato1 << " ";
+    }
+    cout << endl;
+
+
     return 0;
 }
 
