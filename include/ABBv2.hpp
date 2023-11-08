@@ -280,4 +280,20 @@ void ABB<T, menor, igual>::preorder(NodoABB<T, menor, igual>* nodo_actual, std::
     }
 }
 
+template<typename T, bool menor(T, T), bool igual(T, T)>
+std::vector<T>  ABB<T, menor, igual>::postorder() {
+    std::vector<T> datos;
+    postorder(raiz, datos);
+    return datos;
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+void ABB<T, menor, igual>::postorder(NodoABB<T, menor, igual> *nodo_actual, std::vector<T> &datos) {
+    if (nodo_actual != nullptr) {
+        postorder(nodo_actual -> hijo_izquierdo, datos);
+        postorder(nodo_actual -> hijo_derecho, datos);
+        datos.push_back(nodo_actual -> dato);
+    }
+}
+
 #endif
