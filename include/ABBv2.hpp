@@ -263,6 +263,25 @@ std::vector<T> ABB<T,menor,igual>::ancho(){
     return vect;
 }
 
+template<typename T, bool menor(T, T), bool igual(T, T)>            // SUBIR EN EL TERCER COMMIT
+std::vector<T> ABB<T, menor, igual>::inorder() {
+    std::vector<T> elementos;
+    if (!vacio()) {
+        inorder(raiz, elementos);
+    }
+    return elementos;
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>             // SUBIR EN EL TERCER COMMIT
+void ABB<T, menor, igual>::inorder(NodoABB<T, menor, igual>* nodo_actual, std::vector<T>& datos) {
+    if (nodo_actual -> hijo_izquierdo != nullptr) {
+        inorder(nodo_actual -> hijo_izquierdo, datos);  
+    }
+    datos.push_back(nodo_actual -> dato);
+    if (nodo_actual -> hijo_derecho != nullptr) {
+        inorder(nodo_actual -> hijo_derecho, datos); 
+    }
+}
 
 template<typename T, bool menor(T, T), bool igual(T, T)>
 std::vector<T> ABB<T, menor, igual>::preorder(){
