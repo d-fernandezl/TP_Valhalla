@@ -8,7 +8,10 @@ Trabajo Práctico Grupal de Algoritmos y Programación 2 2c2023.
 2. TEJADA RAMIREZ, Aaron Christopher - 109187 - ctejada@fi.uba.ar
 3. SOLES RUIZ, Diego Nahuel - 109638 - dsoles@fi.uba.ar
 4. FERNANDEZ LAURA, Daniela - 110344 - dfernandezl@fi.uba.ar
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/Arbol_De_Placas
 
 ### Corrector asignado:
 
