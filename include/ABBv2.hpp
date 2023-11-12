@@ -274,7 +274,7 @@ std::vector<T> ABB<T,menor,igual>::ancho(){
     return vect;
 }
 
-template<typename T, bool menor(T, T), bool igual(T, T)>     
+template<typename T, bool menor(T, T), bool igual(T, T)>
 std::vector<T> ABB<T, menor, igual>::inorder() {
     std::vector<T> elementos;
     if (!vacio()) {
@@ -283,7 +283,7 @@ std::vector<T> ABB<T, menor, igual>::inorder() {
     return elementos;
 }
 
-template<typename T, bool menor(T, T), bool igual(T, T)>        
+template<typename T, bool menor(T, T), bool igual(T, T)>
 void ABB<T, menor, igual>::inorder(NodoABB<T, menor, igual>* nodo_actual, std::vector<T>& datos) {
     if (nodo_actual -> hijo_izquierdo != nullptr) {
         inorder(nodo_actual -> hijo_izquierdo, datos);  
