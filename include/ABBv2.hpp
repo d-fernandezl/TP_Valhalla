@@ -52,6 +52,17 @@ private:
     // Post: Libera la memoria de los nodos.       
     void liberar_memoria(NodoABB<T, menor, igual>* nodo_actual);
 
+    // Pre: -
+    // Post: Devuelve la direccion del nodo que contiene el dato, o nullptr en caso de que ningun nodo lo contenga. 
+    NodoABB<T, menor, igual>* buscar_dato(NodoABB<T, menor, igual>* nodo_actual, T dato);
+
+    // Pre: -
+    // Post: Actualiza al padre para que tenga el hijo correcto, o directamente no tenga hijo (hijo_izquierdo o hijo_derecho).
+    void inicializar_hijo(NodoABB<T, menor, igual>* padre, NodoABB<T, menor, igual>* hijo, bool sin_hijo);
+
+    // Pre: -
+    // Post: Encuentra el sucesor del nodo_actual y lo retorna.
+    NodoABB<T, menor, igual>* buscar_sucesor(NodoABB<T, menor, igual>* nodo_actual);
 
 public:
     // Constructor.
@@ -263,7 +274,7 @@ std::vector<T> ABB<T,menor,igual>::ancho(){
     return vect;
 }
 
-template<typename T, bool menor(T, T), bool igual(T, T)>            // SUBIR EN EL TERCER COMMIT
+template<typename T, bool menor(T, T), bool igual(T, T)>     
 std::vector<T> ABB<T, menor, igual>::inorder() {
     std::vector<T> elementos;
     if (!vacio()) {
@@ -272,7 +283,7 @@ std::vector<T> ABB<T, menor, igual>::inorder() {
     return elementos;
 }
 
-template<typename T, bool menor(T, T), bool igual(T, T)>             // SUBIR EN EL TERCER COMMIT
+template<typename T, bool menor(T, T), bool igual(T, T)>        
 void ABB<T, menor, igual>::inorder(NodoABB<T, menor, igual>* nodo_actual, std::vector<T>& datos) {
     if (nodo_actual -> hijo_izquierdo != nullptr) {
         inorder(nodo_actual -> hijo_izquierdo, datos);  
@@ -313,6 +324,116 @@ void ABB<T, menor, igual>::postorder(NodoABB<T, menor, igual> *nodo_actual, std:
         postorder(nodo_actual -> hijo_derecho, datos);
         datos.push_back(nodo_actual -> dato);
     }
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+void ABB<T, menor, igual>::baja(T dato) {
+    NodoABB<T, menor, igual>* nodo_baja = buscar_dato(raiz, dato);
+    if (nodo_baja != nullptr) {
+        baja(dato, nodo_baja);
+    }
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+NodoABB<T, menor, igual>* ABB<T, menor, igual>::buscar_dato(NodoABB<T, menor, igual>* nodo_actual, T dato) {
+    bool encontrado = false;
+    NodoABB<T, menor, igual>* nodo_baja = nullptr;
+    while (!encontrado && nodo_actual != nullptr) {
+        if (nodo_actual -> dato == dato) {
+            encontrado = true;
+            nodo_baja = nodo_actual;
+        } else if (nodo_actual -> dato > dato) {
+            nodo_actual = nodo_actual -> hijo_izquierdo;
+        } else {
+            nodo_actual = nodo_actual -> hijo_derecho;
+        }
+    }
+    return nodo_baja;
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+void ABB<T, menor, igual>::inicializar_hijo(NodoABB<T, menor, igual>* padre, NodoABB<T, menor, igual>* hijo, bool sin_hijo) {
+    if (!sin_hijo) { 
+        if (padre -> dato > hijo -> dato) {
+            padre -> hijo_izquierdo = hijo;
+        } else {
+            padre -> hijo_derecho = hijo;
+        }
+    } else {
+        if (padre -> dato > hijo -> dato) {
+            padre -> hijo_izquierdo = nullptr;
+        } else {
+            padre -> hijo_derecho = nullptr;
+        }
+    }
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)> 
+NodoABB<T, menor, igual>* ABB<T, menor, igual>::buscar_sucesor(NodoABB<T, menor, igual>* nodo_actual) {
+    NodoABB<T, menor, igual>* sucesor = nodo_actual;
+    if (nodo_actual -> hijo_izquierdo != nullptr) {
+        sucesor = buscar_sucesor(nodo_actual -> hijo_izquierdo);
+    }
+    return sucesor;
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+void ABB<T, menor, igual>::baja(T dato, NodoABB<T, menor, igual>* nodo_actual) {
+    if (nodo_actual -> hijo_izquierdo == nullptr && nodo_actual -> hijo_derecho == nullptr ) {
+        if (nodo_actual != raiz) {
+            inicializar_hijo(nodo_actual -> padre, nodo_actual, true);
+        }
+    
+    } else if (nodo_actual -> hijo_izquierdo != nullptr && nodo_actual -> hijo_derecho != nullptr) {
+        NodoABB<T, menor, igual>* sucesor;
+        if ((nodo_actual -> hijo_derecho) -> hijo_izquierdo != nullptr) {
+            sucesor = buscar_sucesor((nodo_actual -> hijo_derecho) -> hijo_izquierdo);
+            if (nodo_actual != raiz) { 
+                inicializar_hijo(nodo_actual -> padre, sucesor, false);
+                sucesor -> hijo_izquierdo = nodo_actual -> hijo_izquierdo;
+                sucesor -> hijo_derecho = nodo_actual -> hijo_derecho;
+                inicializar_hijo(sucesor -> padre, sucesor, true);
+                sucesor -> padre = nodo_actual -> padre;
+                (nodo_actual -> hijo_izquierdo) -> padre = sucesor;
+                (nodo_actual -> hijo_derecho) -> padre = sucesor;
+            } else {
+                sucesor -> hijo_derecho = nodo_actual -> hijo_derecho;
+                sucesor -> hijo_izquierdo = nodo_actual -> hijo_izquierdo;
+                inicializar_hijo(sucesor -> padre, sucesor, true);
+                (nodo_actual -> hijo_izquierdo) -> padre = sucesor;
+                (nodo_actual -> hijo_derecho) -> padre = sucesor;
+                sucesor -> padre = nullptr;
+                raiz = sucesor;
+            }
+        
+        } else {
+            if (nodo_actual != raiz) {
+                sucesor = nodo_actual -> hijo_derecho;
+                inicializar_hijo(nodo_actual -> padre, sucesor, false);
+                sucesor -> hijo_izquierdo = nodo_actual -> hijo_izquierdo;
+                sucesor -> padre = nodo_actual -> padre;
+                (nodo_actual -> hijo_izquierdo) -> padre = sucesor;
+            } else {
+                sucesor = nodo_actual -> hijo_derecho;
+                sucesor -> hijo_izquierdo = nodo_actual -> hijo_izquierdo;
+                (nodo_actual -> hijo_izquierdo) -> padre = sucesor;
+                sucesor -> padre = nullptr;
+                raiz = sucesor;
+            }
+        }
+    
+    } else if (nodo_actual -> hijo_izquierdo != nullptr || nodo_actual -> hijo_derecho != nullptr) {
+        if (nodo_actual -> hijo_izquierdo != nullptr) {
+            inicializar_hijo(nodo_actual -> padre, nodo_actual -> hijo_izquierdo, false);
+            (nodo_actual -> hijo_izquierdo) -> padre = nodo_actual -> padre;
+        } else if (nodo_actual -> hijo_derecho != nullptr) {
+            inicializar_hijo(nodo_actual -> padre, nodo_actual -> hijo_derecho, false);
+            (nodo_actual -> hijo_derecho) -> padre = nodo_actual -> padre;
+        }
+    }
+    
+    delete nodo_actual;
+    cantidad_datos --;
 }
 
 #endif
