@@ -436,4 +436,18 @@ void ABB<T, menor, igual>::baja(T dato, NodoABB<T, menor, igual>* nodo_actual) {
     cantidad_datos --;
 }
 
+template<typename T, bool menor(T, T), bool igual(T, T)>
+void ABB<T, menor, igual>::ejecutar(void (*metodo)(T)) {
+    ejecutar(metodo, raiz);
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+void ABB<T, menor, igual>::ejecutar(void (*metodo)(T), NodoABB<T, menor, igual> *nodo_actual) {
+    if(nodo_actual != nullptr){
+        ejecutar(metodo, nodo_actual -> hijo_izquierdo);
+        metodo(nodo_actual -> dato);
+        ejecutar(metodo, nodo_actual -> hijo_derecho);
+    }
+}
+
 #endif
