@@ -1,4 +1,4 @@
-# Install script for directory: /home/arianaseok/Escritorio/carga
+# Install script for directory: /home/arianaseok/Escritorio/CODIGO
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/arianaseok/Escritorio/carga/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/arianaseok/Escritorio/CODIGO/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
