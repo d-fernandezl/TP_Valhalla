@@ -64,6 +64,46 @@ public:
 
     // Destructor.
     ~Heap();
+
+    std::vector<T> devolver_vector();
+
 };
+
+template<typename T, bool comp(T, T)>
+Heap<T,comp>::Heap(){
+    this->datos = std::vector<T>();
+}
+
+template<typename T,bool comp(T,T)>
+void Heap<T,comp>::alta(T dato){
+    if(tamanio()==0){
+        datos.push_back(dato);
+    }else{
+        size_t posicion=tamanio();
+        size_t padre_posicion = (posicion-1)/2;
+        bool finalizar = false;
+        datos.push_back(dato);
+        if(dato>primero()){
+            while(!finalizar){
+                swap(posicion,padre_posicion);
+                posicion = padre_posicion;
+                if(padre_posicion!=0){
+                    padre_posicion = (posicion-1)/2;
+                }
+                if(padre_posicion==posicion){
+                    finalizar=true;
+                }
+            }
+        }
+    }
+}
+
+template<typename T,bool comp(T,T)>
+void Heap<T,comp>::swap(size_t index_1, size_t index_2){
+    T aux = datos[index_1];
+    datos[index_1] = datos[index_2];
+    datos[index_2] = aux;
+}
+
 
 #endif
