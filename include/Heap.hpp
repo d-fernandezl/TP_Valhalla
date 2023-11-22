@@ -105,5 +105,43 @@ void Heap<T,comp>::swap(size_t index_1, size_t index_2){
     datos[index_2] = aux;
 }
 
+template<typename T,bool comp(T,T)>
+bool Heap<T, comp>::vacio() {
+    return datos.size() == 0;
+}
+
+template<typename T, bool comp(T, T)>
+T Heap<T, comp>::baja() {
+    if (vacio()) {
+        throw Heap_exception();
+    }
+    swap(0, tamanio() - 1);
+    restauracion_descendente(0);
+    T dato = datos.back();        
+    datos.pop_back();               
+    return dato;     
+}
+
+template<typename T, bool comp(T, T)>
+void Heap<T, comp>::restauracion_descendente(size_t posicion_actual) {
+    size_t posicion_hijo_izquierdo = (2 * posicion_actual) + 1;
+    size_t posicion_hijo_derecho = (2 * posicion_actual) + 2;
+    if (posicion_hijo_izquierdo < datos.size() - 1) {
+        if (datos[posicion_hijo_izquierdo] > datos[posicion_actual]) {
+            swap(posicion_actual, posicion_hijo_izquierdo);
+            restauracion_descendente(posicion_hijo_izquierdo);
+        }
+    }
+    
+    if (posicion_hijo_derecho < datos.size() - 1) {
+        if (datos[posicion_hijo_derecho] > datos[posicion_actual]) {
+            swap(posicion_actual, posicion_hijo_derecho);
+            restauracion_descendente(posicion_hijo_derecho);
+        }
+    }
+}
+
+template<typename T, bool comp(T, T)>
+Heap<T, comp>::~Heap(){}
 
 #endif
