@@ -29,9 +29,22 @@ Floyd::calcular_camino_minimo(Matriz adyacencia, size_t vertices, size_t origen,
         inicializar_matrices();
 
         // TODO: Escribir el código necesario, haciendo uso de los métodos existentes.
+        for(size_t k = 0;k<cantidad_vertices;k++){ // K es tanto fila como columna
+            for(size_t i = 0;i<cantidad_vertices;i++){
+                for(size_t j=0;j<cantidad_vertices;j++){
+                    int dato1 = matriz_adyacencia.elemento(i,j);
+                    int dato2 = matriz_adyacencia.elemento(k,j) + matriz_adyacencia.elemento(i,k);
+                    if(dato1<dato2){
+                        matriz_adyacencia.elemento(i,j) = dato1;
+                    }else{
+                        matriz_adyacencia.elemento(i,j) = dato2;
+                    }
+                }
+            }
+        }
 
     }
-
+    
     return obtener_camino(origen, destino);
 }
 
