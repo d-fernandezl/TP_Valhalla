@@ -3,13 +3,13 @@
 
 #include "Heap.hpp"
 #include "Arma.hpp"
-
+const size_t MAX_CAPACIDAD = 15;
 template<typename T,bool comp(T,T)>
 
 class Inventario{
 private:
     Heap<T,comp>* heapMaxima;
-
+    size_t cantidad_datos;
 public:
     //Constructor
     Inventario();
@@ -25,17 +25,34 @@ public:
     //Pre: El inventario no debe estar vacio.
     //Post: Devuelve el arma de mayor prioridad.
     T consulta();
+
+    //Pre:
+    //Post: Duvuelve true si el inventario se encuentra lleno.
+    bool esta_lleno();
+
+    //Pre:-
+    //Post: Devuelve true si el inventario se encuentra vacio.
+    bool vacio();
+
+    //Pre:-
+    //Post:Devuelve la cantidad de datos.
+    size_t tamanio();
+    
 };
 
 template<typename T,bool comp(T,T)>
 Inventario<T,comp>::Inventario(){
     this-> heapMaxima = new Heap<T, comp>();
+    this->cantidad_datos=0;
 }
 
 
 template<typename T,bool comp(T,T)>
 void Inventario<T,comp>::alta(T dato){
-    heapMaxima->alta(dato);
+    if(!esta_lleno()){
+        heapMaxima->alta(dato);
+        cantidad_datos++;
+    }
 }
 
 template<typename T,bool comp(T,T)>
@@ -45,7 +62,13 @@ T Inventario<T, comp>::consulta() {
 
 template<typename T,bool comp(T,T)>
 T Inventario<T, comp>::baja() {
+    cantidad_datos--;
     return heapMaxima -> baja();
+}
+
+template<typename T,bool comp(T,T)>
+size_t Inventario<T,comp>::tamanio(){
+    return cantidad_datos;
 }
 
 #endif
