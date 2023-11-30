@@ -1,6 +1,7 @@
 #ifndef ALGO2_TP3_PT2_Inventario_H
 #define ALGO2_TP3_PT2_Inventario_H
 
+#include <stdexcept>
 #include "Heap.hpp"
 #include "Arma.hpp"
 
@@ -8,7 +9,8 @@ template<typename T,bool comp(T,T)>
 
 class Inventario{
 private:
-    Heap<T,comp>* heapmaxima;
+    Heap<T,comp>* heapMaxima;
+
 public:
     //Constructor
     Inventario();
@@ -28,10 +30,30 @@ public:
 
 template<typename T,bool comp(T,T)>
 Inventario<T,comp>::Inventario(){
-    this->heapmaxima = Heap();
+    this-> heapMaxima = new Heap<T, comp>();
 }
+
+
 template<typename T,bool comp(T,T)>
 void Inventario<T,comp>::alta(T dato){
-    heapmaxima->alta(dato);
+    heapMaxima->alta(dato);
 }
+
+template<typename T,bool comp(T,T)>
+T Inventario<T, comp>::consulta() {
+    if (heapMaxima -> vacio()) {
+        throw std::runtime_error("Inventario vacio. No hay armas disponibles");
+    }
+    return heapMaxima -> primero();
+}
+
+template<typename T,bool comp(T,T)>
+T Inventario<T, comp>::baja() {
+    if (heapMaxima -> vacio()) {
+        throw std::runtime_error("Inventario vacio. No hay armas disponibles");
+    }
+
+    return heapMaxima -> baja();
+}
+
 #endif
