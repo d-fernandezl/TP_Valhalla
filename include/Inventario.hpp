@@ -1,7 +1,6 @@
 #ifndef ALGO2_TP3_PT2_Inventario_H
 #define ALGO2_TP3_PT2_Inventario_H
 
-#include <stdexcept>
 #include "Heap.hpp"
 #include "Arma.hpp"
 
