@@ -41,18 +41,11 @@ void Inventario<T,comp>::alta(T dato){
 
 template<typename T,bool comp(T,T)>
 T Inventario<T, comp>::consulta() {
-    if (heapMaxima -> vacio()) {
-        throw std::runtime_error("Inventario vacio. No hay armas disponibles");
-    }
     return heapMaxima -> primero();
 }
 
 template<typename T,bool comp(T,T)>
 T Inventario<T, comp>::baja() {
-    if (heapMaxima -> vacio()) {
-        throw std::runtime_error("Inventario vacio. No hay armas disponibles");
-    }
-
     return heapMaxima -> baja();
 }
 
