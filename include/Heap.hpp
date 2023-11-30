@@ -27,6 +27,8 @@ private:
     // (El dato "baja" en el heap, intercambiándose con el menor/mayor dato.)
     void downheap(size_t& index_movido);
 
+    void restauracion_descendente(size_t posicion_actual);
+
     // NOTA: No es necesario que lancen excepciones en estos métodos porque son privados.
     // Deberian siempre asegurar que los indices pasados por parámetros son válidos.
     // Consideren cada caso con detenimiento.
