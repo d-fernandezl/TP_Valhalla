@@ -27,6 +27,10 @@ private:
     // (El dato "baja" en el heap, intercambiándose con el menor/mayor dato.)
     void downheap(size_t& index_movido);
 
+    void restauracion_descendente(size_t posicion_actual);
+
+    std::vector<T> devolver_vector();
+
     // NOTA: No es necesario que lancen excepciones en estos métodos porque son privados.
     // Deberian siempre asegurar que los indices pasados por parámetros son válidos.
     // Consideren cada caso con detenimiento.
@@ -65,7 +69,8 @@ public:
     // Destructor.
     ~Heap();
 
-    std::vector<T> devolver_vector();
+
+
 
 };
 
@@ -139,6 +144,38 @@ void Heap<T, comp>::restauracion_descendente(size_t posicion_actual) {
             restauracion_descendente(posicion_hijo_derecho);
         }
     }
+}
+
+template<typename T, bool comp(T, T)>
+void Heap<T, comp>::downheap(size_t& index_movido){
+    size_t index_hijo_izquierdo;
+    size_t index_hijo_derecho;
+    size_t index_minimo;
+
+    do {
+        index_hijo_izquierdo = 2 * index_movido + 1;
+        index_hijo_derecho = 2 * index_movido + 2;
+        index_minimo = index_movido;
+
+        if (index_hijo_izquierdo < datos.size() && comp(datos[index_hijo_izquierdo], datos[index_minimo])) {
+            index_minimo = index_hijo_izquierdo;
+        }
+
+        if (index_hijo_derecho < datos.size() && comp(datos[index_hijo_derecho], datos[index_minimo])) {
+            index_minimo = index_hijo_derecho;
+        }
+
+        if (index_minimo != index_movido){
+            swap(index_movido, index_minimo);
+            index_movido = index_minimo;
+        }
+
+    } while (index_minimo != index_movido);
+}
+
+template<typename T, bool comp(T, T)>
+size_t Heap<T, comp>::tamanio(){
+    return datos.size();
 }
 
 template<typename T, bool comp(T, T)>
