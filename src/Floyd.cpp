@@ -17,6 +17,10 @@ std::vector<size_t> Floyd::obtener_camino(size_t origen, size_t destino) {
     std::vector<size_t> camino;
 
     // TODO: Escribir el código necesario, haciendo uso de los métodos existentes.
+    camino.push_back(origen);
+    // 0 2 5 6
+    
+
 
     return camino;
 }
@@ -39,7 +43,7 @@ Floyd::calcular_camino_minimo(Matriz adyacencia, size_t vertices, size_t origen,
                             matriz_adyacencia.elemento(i,j) = dato1; // elemento(i,j) es la esquina opuesta al k (o opuesta a la diagonal).
                         }else{
                             matriz_adyacencia.elemento(i,j) = dato2;// Falta que cambie tambien en la matriz de caminos.
-                            matriz_caminos.elemento(i,j) = matriz_caminos.elemento(k,j);
+                            matriz_caminos.elemento(i,j) = int(k);
                         }
                     }
                 }
