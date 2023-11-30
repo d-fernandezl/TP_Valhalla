@@ -20,7 +20,7 @@ private:
     // Pre: Ambos índices deben ser menor que la cantidad de datos.
     // Post: Realiza un "upheap" sobre los índices indicados.
     // (El dato "sube" en el heap.)
-    void upheap(size_t& index_insertado, size_t index_padre);
+    void upheap(size_t& index, size_t& parent_index);
 
     // Post: El índice debe ser menor que la cantidad de datos.
     // Post: Realiza un "downheap" sobre el índice indicado.
@@ -83,21 +83,19 @@ void Heap<T,comp>::alta(T dato){
     }else{
         size_t posicion=tamanio();
         size_t padre_posicion = (posicion-1)/2;
-        bool finalizar = false;
         datos.push_back(dato);
-        if(dato>primero()){
-            while(!finalizar){
-                swap(posicion,padre_posicion);
-                posicion = padre_posicion;
-                if(padre_posicion!=0){
-                    padre_posicion = (posicion-1)/2;
-                }
-                if(padre_posicion==posicion){
-                    finalizar=true;
-                }
-            }
-        }
+        upheap(posicion,padre_posicion);
     }
+}
+
+template<typename T,bool comp(T,T)>
+size_t Heap<T,comp>::tamanio(){
+    return datos.size();
+}
+
+template<typename T,bool comp(T,T)>
+T Heap<T,comp>::primero(){
+    return datos[0];
 }
 
 template<typename T,bool comp(T,T)>
