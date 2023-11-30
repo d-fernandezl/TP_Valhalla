@@ -47,11 +47,11 @@ void Dijkstra::actualizar_distancia(size_t vertice) {
 
 std::vector<size_t> Dijkstra::obtener_camino(size_t origen, size_t destino) {
     std::vector<size_t> camino;
-    size_t actual = destino;
+    size_t vertice_actual = destino;
 
-    while(actual != origen){
-        camino.insert(camino.begin(), actual);
-        actual = recorrido[actual];
+    while(vertice_actual != origen){
+        camino.insert(camino.begin(), vertice_actual);
+        vertice_actual = recorrido[vertice_actual];
     }
 
     camino.insert(camino.begin(), origen);
