@@ -71,4 +71,16 @@ size_t Inventario<T,comp>::tamanio(){
     return cantidad_datos;
 }
 
+//begin
+
+template<typename T,bool comp(T,T)>
+bool Inventario<T,comp>::esta_lleno(){
+    return cantidad_datos == MAX_CAPACIDAD;
+}
+
+template<typename T,bool comp(T,T)>
+bool Inventario<T,comp>::vacio(){
+    return cantidad_datos == 0;
+}
+
 #endif
