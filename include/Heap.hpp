@@ -181,4 +181,28 @@ size_t Heap<T, comp>::tamanio(){
 template<typename T, bool comp(T, T)>
 Heap<T, comp>::~Heap(){}
 
+
+
+//begin
+template<typename T, bool comp(T, T)>
+T Heap<T, comp>::primero() {
+    if (vacio()) {
+        throw Heap_exception();
+    }
+    return datos[0];
+}
+
+template<typename T, bool comp(T, T)>
+void Heap<T, comp>::upheap(size_t& index, size_t& parent_index) {
+    if (index == 0) {
+        return;
+    }
+    if (comp(datos[index], datos[parent_index])) {
+        swap(index, parent_index);
+        index = parent_index;
+        parent_index = (index - 1) / 2;
+        upheap(index,parent_index);
+    }
+}
+
 #endif
