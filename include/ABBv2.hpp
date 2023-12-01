@@ -52,6 +52,14 @@ private:
     // Post: Libera la memoria de los nodos.       
     void liberar_memoria(NodoABB<T, menor, igual>* nodo_actual);
 
+    //Pre: 
+    //Post: devuelve el mayor valor.
+    size_t altura(NodoABB<T, menor, igual>* nodo);
+
+    //Pre: 
+    //Post: Devuelve true si el nodo tiene hijos
+    bool es_hoja(NodoABB<T, menor, igual>* nodo);
+
 
 public:
     // Constructor.
@@ -96,6 +104,10 @@ public:
     // Pre: -
     // Post: Devuelve la cantidad de datos en el árbol.
     std::size_t tamanio();
+
+    //Pre: el arbol no debe estar vacio
+    //Post: devuelve la altura del arbol
+    size_t altura();
 
     // Pre: -
     // Post: Devuelve true si el árbol está vacio.
@@ -313,6 +325,36 @@ void ABB<T, menor, igual>::postorder(NodoABB<T, menor, igual> *nodo_actual, std:
         postorder(nodo_actual -> hijo_derecho, datos);
         datos.push_back(nodo_actual -> dato);
     }
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+size_t ABB<T, menor, igual>::altura(){
+    return altura(raiz);
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+size_t ABB<T, menor, igual>::altura(NodoABB<T, menor, igual>* nodo){
+    size_t izq=0;
+    size_t der=0;
+    if (es_hoja(nodo)){
+        return 0;
+    }
+    if(!(nodo->hijo_izquierdo==nullptr)){
+        izq = altura(nodo->hijo_izquierdo)+1;
+    }
+    if(!(nodo->hijo_derecho==nullptr)){
+        der = altura(nodo->hijo_derecho)+1;
+    }
+    if (izq>der){
+        return izq;
+    }else{
+        return der;
+    }
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+bool ABB<T, menor, igual>::es_hoja(NodoABB<T, menor, igual>* nodo){
+    return (nodo->hijo_derecho==nullptr && nodo->hijo_izquierdo==nullptr);
 }
 
 #endif
