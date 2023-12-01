@@ -18,6 +18,10 @@ private:
     // Post: Calcula y devuelve el peso total del camino.
     int obtener_peso_camino(std::vector<size_t> camino);
 
+    //Pre: El vertice debe existir.
+    //Post: Pone infinitos en las filas y columnas del vertice en la matriz de adyacencia.
+    void aislar_vertice(size_t vertice);
+
 public:
     // Constructores.
     Grafo();
