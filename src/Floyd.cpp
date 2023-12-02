@@ -32,6 +32,7 @@ std::vector<size_t> Floyd::obtener_camino(size_t origen, size_t destino) {
             camino.push_back(matriz_caminos[origen, destino]);
             destino = matriz_caminos[origen, destino];
         }
+        camino.pushback(origen);
         camino = reverse_vector(camino);
     }
 
