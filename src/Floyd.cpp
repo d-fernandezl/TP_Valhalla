@@ -13,11 +13,11 @@ void Floyd::inicializar_matrices() {
     matriz_costos = matriz_adyacencia;
 }
 
-std::vector<size_t> reverse_vector(std::vector<size_t> vector_original) {
+std::vector<size_t> Floyd::reverse_vector(std::vector<size_t> vector_original) {
     std::vector<size_t> vector_en_reversa;
-    tamanio_vector_original = vector_original.size();
+    size_t tamanio_vector_original = vector_original.size();
     for (size_t i = 0; i < tamanio_vector_original; i++) {
-        vector_en_reversa[i] = vector_original[tamanio_vector_original - i - 1]
+        vector_en_reversa.push_back(vector_original[tamanio_vector_original - i - 1]);
     }
     return vector_en_reversa;
 }
@@ -28,11 +28,11 @@ std::vector<size_t> Floyd::obtener_camino(size_t origen, size_t destino) {
     // TODO: Escribir el código necesario, haciendo uso de los métodos existentes.
     camino.push_back(destino);
     if (origen != destino) {
-        while (matriz_caminos[origen, destino] != destino) {
-            camino.push_back(matriz_caminos[origen, destino]);
-            destino = matriz_caminos[origen, destino];
+        while (matriz_caminos.elemento(origen, destino) != destino) {
+            camino.push_back(matriz_caminos.elemento(origen, destino));
+            destino = matriz_caminos.elemento(origen, destino);
         }
-        camino.pushback(origen);
+        camino.push_back(origen);
         camino = reverse_vector(camino);
     }
 
