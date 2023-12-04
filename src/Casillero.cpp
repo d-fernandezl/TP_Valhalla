@@ -10,3 +10,7 @@ std::string Casillero::obtener_objeto(){
 int Casillero::obtener_numero(){
     return numero;
 }
+
+void Casillero::asignar_objeto(std::string objeto){
+    this->objeto = objeto;
+}

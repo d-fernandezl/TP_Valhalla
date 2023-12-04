@@ -15,6 +15,8 @@ public:
     //Post: Devuelve el dato.
     std::string obtener_objeto();
 
+    void asignar_objeto(std::string objeto);
+
     //Pre: -
     //Post:Devuelve el vertice.
     int obtener_numero();
