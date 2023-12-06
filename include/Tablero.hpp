@@ -90,7 +90,7 @@ Crea un objeto lugar de la clase lugar y asigna a lugar.fila y lugar.columna,con
             std::uniform_int_distribution<> distribFila(0, matriz.size() - 1);
             std::uniform_int_distribution<> distribColumna(0, matriz[0].size() - 1);
             lugar.fila = distribFila(gen);
-            pos.columna = distribColumna(gen);
+            lugar.columna = distribColumna(gen);
         } while (matriz[lugar.fila][lugar.columna].obtener_objeto() == "p"); // Si es una pared, generar otra posición
         return lugar;
     }
