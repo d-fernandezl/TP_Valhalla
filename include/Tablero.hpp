@@ -5,23 +5,20 @@
 #include "Casillero.hpp"
 #include <random>
 
+const std::string JUGADOR="J";
+const std::string PARED="B";
+const std::string ENEMIGO="P";
+const std::string VACIO=".";
+
 class Tablero{
 private:
     std::vector<std::vector<Casillero>> matriz;
+Grafo grafo_tablero();
 public:
     // Constructor
     Tablero(int filas, int columnas) {
         matriz.resize(filas, std::vector<Casillero>(columnas, Casillero(0, "")));
     }
-
-    // Mover personaje
-    void moverPersonaje(size_t filaOrigen, size_t columnaOrigen, size_t filaDestino, size_t columnaDestino) {
-        if (filaOrigen >= 0 && filaOrigen < matriz.size() && columnaOrigen >= 0 && columnaOrigen < matriz[0].size() &&
-            filaDestino >= 0 && filaDestino < matriz.size() && columnaDestino >= 0 && columnaDestino < matriz[0].size()) {
-            std::swap(matriz[filaOrigen][columnaOrigen], matriz[filaDestino][columnaDestino]);
-        }
-    }
-
     void imprimir_matriz(){
         for(int i=int(matriz.size()-1);i>=0;i--){
             for(size_t j=0;j<matriz[0].size();j++){
@@ -35,7 +32,7 @@ public:
         int contador = 0;
         for(size_t i=0;i<matriz.size();i++){
             for(size_t j=0;j<matriz[0].size();j++){
-                matriz[i][j] = Casillero(contador,"#");
+                matriz[i][j] = Casillero(contador,VACIO);
                 contador++;
             }
         }
@@ -45,7 +42,7 @@ public:
         for(size_t i=0;i<casilleros.size();i++){
             int columna = casilleros[i]%9;
             int fila = casilleros[i]/9;
-            asignar_objeto(fila,columna,"\U0001f9f1")
+            asignar_objeto(fila,columna,PARED);
         }
         
     }
@@ -57,6 +54,12 @@ public:
 
         return distrib(gen); // Devuelve 1 o 2 con igual probabilidad
 }
+    std::string obtener_objeto(int vertice){
+            int fila = vertice/9;
+            int columna = vertice%9;
+    
+            return (matriz[fila][columna].obtener_objeto());
+    }
 
 //para el pyramid head
 
@@ -65,24 +68,6 @@ void asignar_objeto(size_t fila, size_t columna, std::string objeto) {
         matriz[fila][columna].asignar_objeto(objeto);
     }
 }
-
-
-//para mover el personaje
-
-/*
-void moverPersonaje(size_t filaOrigen, size_t columnaOrigen, size_t filaDestino, size_t columnaDestino) {
-    if (filaOrigen >= 0 && filaOrigen < matriz.size() && columnaOrigen >= 0 && columnaOrigen < matriz[0].size() &&
-        filaDestino >= 0 && filaDestino < matriz.size() && columnaDestino >= 0 && columnaDestino < matriz[0].size()) {
-        // Comprobar si el casillero de destino es una pared
-        if (matriz[filaDestino][columnaDestino].obtener_objeto() != "p") {
-            std::swap(matriz[filaOrigen][columnaOrigen], matriz[filaDestino][columnaDestino]);
-        } else {
-            std::cout << "No puedes moverte a un casillero que contiene una pared.\n";
-        }
-    }
-}
-*/
-
 //para obtener el camino minimo
 /*
 
