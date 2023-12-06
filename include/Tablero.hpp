@@ -41,10 +41,6 @@ public:
         }
     }
 
-    void asignar_objeto(size_t fila,size_t columna,std::string valor){
-        matriz[fila][columna].asignar_objeto(valor);
-    }
-
     void asignar_paredes(std::vector<int> casilleros){
         for(size_t i=0;i<casilleros.size();i++){
             int columna = casilleros[i]%9;
