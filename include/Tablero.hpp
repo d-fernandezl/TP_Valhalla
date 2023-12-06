@@ -60,64 +60,39 @@ public:
     
             return (matriz[fila][columna].obtener_objeto());
     }
-
 //para el pyramid head
 
-void asignar_objeto(size_t fila, size_t columna, std::string objeto) {
-    if (fila >= 0 && fila < matriz.size() && columna >= 0 && columna < matriz[0].size()) {
-        matriz[fila][columna].asignar_objeto(objeto);
-    }
-}
-//para obtener el camino minimo
+// Genera enemigos en posiciones aleatorias que no sean paredes
 /*
+*generar_Lugar_Aleatorio() genera una posicion aleatoria en el tablero que no sea una pared. 
+Crea un objeto lugar de la clase lugar y asigna a lugar.fila y lugar.columna,con lo cual los valores aleatorios que se representan una posición valida en el tablero.
+*La funcion generarEnemigos() utiliza la clase Lugar para generar enemigos en posiciones aleatorias en el tablero que no sean paredes. 
+*generarPosicionAleatoria() asigna un enemigo a esa posicion en el tablero ya sea 0, 1 o 2.
 
-std::vector<Posicion> Tablero::encontrarCaminoMasCorto(Posicion origen, Posicion destino) {
-    // Crear una cola para realizar una búsqueda en anchura
-    std::queue<Posicion> cola;
-    cola.push(origen);
-
-    // Crear una matriz para llevar un registro de las posiciones visitadas
-    std::vector<std::vector<bool>> visitado(matriz.size(), std::vector<bool>(matriz[0].size(), false));
-    visitado[origen.fila][origen.columna] = true;
-
-    // Crear una matriz para almacenar el camino más corto
-    std::vector<std::vector<Posicion>> camino(matriz.size(), std::vector<Posicion>(matriz[0].size()));
-
-    // Realizar la búsqueda en anchura
-    while (!cola.empty()) {
-        Posicion actual = cola.front();
-        cola.pop();
-
-        // Comprobar si hemos llegado al destino
-        if (actual.fila == destino.fila && actual.columna == destino.columna) {
-            std::vector<Posicion> resultado;
-            while (!(actual.fila == origen.fila && actual.columna == origen.columna)) {
-                resultado.push_back(actual);
-                actual = camino[actual.fila][actual.columna];
-            }
-            resultado.push_back(origen);
-            std::reverse(resultado.begin(), resultado.end());
-            return resultado;
+*/
+    int generarEnemigos() {
+        std::random_device rd; // genera numeros aleatorios
+        std::mt19937 gen(rd());// genera numeros aleatorios en Mersenne Twister 19937
+        std::uniform_int_distribution<> distrib(0, 2); // Distribucion de entre 0, 1 y 2
+        int numEnemigos = distrib(gen);
+        for (int i = 0; i < numEnemigos; i++) {
+            Lugar lugar = generar_Lugar_Aleatorio();
+            matriz[lugar.fila][lugar.columna].asignar_objeto("E");
         }
-
-        // Visitar las posiciones adyacentes
-        std::vector<Posicion> adyacentes = {{actual.fila - 1, actual.columna}, {actual.fila + 1, actual.columna}, {actual.fila, actual.columna - 1}, {actual.fila, actual.columna + 1}};
-        for (const Posicion& adyacente : adyacentes) {
-            if (esValida(adyacente.fila, adyacente.columna, matriz) && !visitado[adyacente.fila][adyacente.columna]) {
-                cola.push(adyacente);
-                visitado[adyacente.fila][adyacente.columna] = true;
-                camino[adyacente.fila][adyacente.columna] = actual;
-            }
-        }
+        return numEnemigos;
     }
 
-    // Si no se encontró un camino, devolver un vector vacío
-    return {};
-}
-*/
-
-
-
-
+    Lugar generar_Lugar_Aleatorio() {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        Lugar lugar;
+        do {
+            std::uniform_int_distribution<> distribFila(0, matriz.size() - 1);
+            std::uniform_int_distribution<> distribColumna(0, matriz[0].size() - 1);
+            lugar.fila = distribFila(gen);
+            pos.columna = distribColumna(gen);
+        } while (matriz[lugar.fila][lugar.columna].obtener_objeto() == "p"); // Si es una pared, generar otra posición
+        return lugar;
+    }
 };
 #endif
