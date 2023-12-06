@@ -23,13 +23,6 @@ public:
     }
 
     void imprimir_matriz(){
-        /*
-        for(size_t i=0;i<matriz.size();i++){
-            for(size_t j=0;j<matriz[0].size();j++){
-                std::cout<<matriz[i][j].obtener_objeto()<<"|";
-            }
-            std::cout<<std::endl;
-        }*/
         for(int i=int(matriz.size()-1);i>=0;i--){
             for(size_t j=0;j<matriz[0].size();j++){
                 std::cout<<matriz[i][j].obtener_objeto()<<"|";
@@ -48,15 +41,15 @@ public:
         }
     }
 
-    void asignar_paredes(size_t fila,size_t columna){
-        matriz[fila][columna].asignar_objeto("p");
+    void asignar_objeto(size_t fila,size_t columna,std::string valor){
+        matriz[fila][columna].asignar_objeto(valor);
     }
 
-    void algo(std::vector<int> casilleros){
+    void asignar_paredes(std::vector<int> casilleros){
         for(size_t i=0;i<casilleros.size();i++){
             int columna = casilleros[i]%9;
             int fila = casilleros[i]/9;
-            matriz[fila][columna].asignar_objeto("\U0001f9f1");
+            asignar_objeto(fila,columna,"\U0001f9f1")
         }
         
     }
