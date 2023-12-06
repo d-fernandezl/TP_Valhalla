@@ -60,6 +60,11 @@ public:
     
             return (matriz[fila][columna].obtener_objeto());
     }
+
+void asignar_objeto(int fila, int columna, const std::string& objeto) {
+    matriz[fila][columna].asignar_objeto(objeto);
+}
+
 //para el pyramid head
 
 // Genera enemigos en posiciones aleatorias que no sean paredes
