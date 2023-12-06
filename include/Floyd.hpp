@@ -16,6 +16,10 @@ private:
     // Post: Devuelve el camino desde origen a destino.
     std::vector<size_t> obtener_camino(size_t origen, size_t destino);
 
+    // Pre: -
+    // Post: Devuelve el vector_original en reversa.
+    std::vector<size_t> reverse_vector(std::vector<size_t> vector_original);
+
 public:
     // Constructor.
     Floyd();

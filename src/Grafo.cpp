@@ -93,6 +93,19 @@ Grafo::Grafo(const Grafo& grafo1) {
     algoritmo_camino_minimo = nullptr;
 }
 
+void Grafo::aislar_vertice(size_t vertice){
+    for(size_t i=0;i<vertices;i++){
+        if(i!=vertice){
+            matriz_adyacencia.elemento(vertice,i) = INFINITO;
+        }
+    }
+    for(size_t j=0;j<vertices;j++){
+        if(j!=vertice){
+            matriz_adyacencia.elemento(j,vertice) = INFINITO;
+        }
+    }
+}
+
 Grafo& Grafo::operator=(const Grafo& grafo1) {
     if (this != &grafo1) {
         delete algoritmo_camino_minimo;
