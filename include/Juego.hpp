@@ -25,6 +25,8 @@ public:
     //Pre: -
     //Post: Inicia el juego.
     void iniciar_juego();
+
+    ~Juego();
     
 };
 
@@ -77,5 +79,8 @@ void Juego<A,P,comp,menor,igual>::iniciar_juego(){
         rondas++;
     }
 }
+
+template<typename A,typename P,bool comp(A,A),bool menor(P,P),bool igual(P,P)>
+Juego<A,P,comp,menor,igual>::~Juego(){}
 
 #endif
