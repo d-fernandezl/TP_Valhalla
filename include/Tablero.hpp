@@ -9,6 +9,12 @@ const std::string JUGADOR="\U0001f935";//J
 const std::string PARED="\U0001f9f1";//B
 const std::string ENEMIGO="\U0001f480";//P
 const std::string VACIO=".";
+const std::string MULTIPLICADOR="\U00002b"; //+
+
+struct Lugar {
+    int fila;
+    int columna;
+};
 
 class Tablero{
 private:
@@ -47,13 +53,7 @@ public:
         
     }
 
-    int generarEnemigos() {
-        std::random_device rd;  // Dispositivo de generación de números aleatorios
-        std::mt19937 gen(rd()); // Generador de números aleatorios Mersenne Twister 19937
-        std::uniform_int_distribution<> distrib(1, 2); // Distribución uniforme entre 1 y 2
 
-        return distrib(gen); // Devuelve 1 o 2 con igual probabilidad
-}
     std::string obtener_objeto(int vertice){
             int fila = vertice/9;
             int columna = vertice%9;
@@ -75,10 +75,10 @@ Crea un objeto lugar de la clase lugar y asigna a lugar.fila y lugar.columna,con
 *generarPosicionAleatoria() asigna un enemigo a esa posicion en el tablero ya sea 0, 1 o 2.
 
 */
-    int generarEnemigos() {
-        std::random_device rd; // genera numeros aleatorios
-        std::mt19937 gen(rd());// genera numeros aleatorios en Mersenne Twister 19937
-        std::uniform_int_distribution<> distrib(0, 2); // Distribucion de entre 0, 1 y 2
+    int generar_Enemigos() {
+        std::random_device rd; 
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> distrib(0, 2); 
         int numEnemigos = distrib(gen);
         for (int i = 0; i < numEnemigos; i++) {
             Lugar lugar = generar_Lugar_Aleatorio();
@@ -86,6 +86,12 @@ Crea un objeto lugar de la clase lugar y asigna a lugar.fila y lugar.columna,con
         }
         return numEnemigos;
     }
+
+    void generar_Multiplicador() {
+        Lugar lugar = generar_Lugar_Aleatorio();
+        matriz[lugar.fila][lugar.columna].asignar_objeto(MULTIPLICADOR);
+    }
+};
 
     Lugar generar_Lugar_Aleatorio() {
         std::random_device rd;
@@ -96,7 +102,7 @@ Crea un objeto lugar de la clase lugar y asigna a lugar.fila y lugar.columna,con
             std::uniform_int_distribution<> distribColumna(0, matriz[0].size() - 1);
             lugar.fila = distribFila(gen);
             lugar.columna = distribColumna(gen);
-        } while (matriz[lugar.fila][lugar.columna].obtener_objeto() == "p"); // Si es una pared, generar otra posición
+        } while (matriz[lugar.fila][lugar.columna].obtener_objeto() == PARED); 
         return lugar;
     }
 };
