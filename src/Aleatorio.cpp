@@ -86,7 +86,7 @@ void Aleatorio::obtener_arma_aleatoria(Inventario<Arma, comp> &inventario_armas)
         inventario_armas.alta(generar_arma_aleatoria());
         cout << "Haz obtenido una nueva arma!" << endl;
     } else {
-        cout << "Pucha :C no hay arma nueva, PIPIPI" << endl;
+        cout << "No se ha podido obtener un nuevo arma, prueba suerte en el siguiente nivel." << endl;
     }
 }
 
