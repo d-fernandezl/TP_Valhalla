@@ -37,6 +37,9 @@ public:
     //Pre:-
     //Post:Devuelve la cantidad de datos.
     size_t tamanio();
+
+    // Destructor
+    ~Inventario();
     
 };
 
@@ -81,6 +84,11 @@ bool Inventario<T,comp>::esta_lleno(){
 template<typename T,bool comp(T,T)>
 bool Inventario<T,comp>::vacio(){
     return cantidad_datos == 0;
+}
+
+template<typename T,bool comp(T,T)>
+Inventario<T,comp>::~Inventario() {
+    delete heapMaxima;
 }
 
 #endif
