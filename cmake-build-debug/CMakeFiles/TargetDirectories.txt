@@ -1,0 +1,3 @@
+/home/arianaseok/Escritorio/CODIGO/cmake-build-debug/CMakeFiles/ayp2_plantilla_tp_grupal_2c2023.dir
+/home/arianaseok/Escritorio/CODIGO/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/arianaseok/Escritorio/CODIGO/cmake-build-debug/CMakeFiles/rebuild_cache.dir
