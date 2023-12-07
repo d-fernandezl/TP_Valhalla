@@ -5,9 +5,9 @@
 #include "Casillero.hpp"
 #include <random>
 
-const std::string JUGADOR="J";
-const std::string PARED="B";
-const std::string ENEMIGO="P";
+const std::string JUGADOR="\U0001f935";//J
+const std::string PARED="\U0001f9f1";//B
+const std::string ENEMIGO="\U0001f480";//P
 const std::string VACIO=".";
 
 class Tablero{
@@ -82,7 +82,7 @@ Crea un objeto lugar de la clase lugar y asigna a lugar.fila y lugar.columna,con
         int numEnemigos = distrib(gen);
         for (int i = 0; i < numEnemigos; i++) {
             Lugar lugar = generar_Lugar_Aleatorio();
-            matriz[lugar.fila][lugar.columna].asignar_objeto("E");
+            matriz[lugar.fila][lugar.columna].asignar_objeto(ENEMIGO);
         }
         return numEnemigos;
     }
