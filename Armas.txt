@@ -1,0 +1,6 @@
+Escopeta
+Revolver
+Navaja
+Rifle
+Pistola
+Motosierra
