@@ -52,7 +52,6 @@ private:
     // Post: Libera la memoria de los nodos.       
     void liberar_memoria(NodoABB<T, menor, igual>* nodo_actual);
 
-<<<<<<< HEAD
     //Pre: 
     //Post: devuelve el mayor valor.
     size_t altura(NodoABB<T, menor, igual>* nodo);
@@ -61,7 +60,6 @@ private:
     //Post: Devuelve true si el nodo tiene hijos
     bool es_hoja(NodoABB<T, menor, igual>* nodo);
 
-=======
     // Pre: -
     // Post: Devuelve la direccion del nodo que contiene el dato, o nullptr en caso de que ningun nodo lo contenga. 
     NodoABB<T, menor, igual>* buscar_dato(NodoABB<T, menor, igual>* nodo_actual, T dato);
@@ -83,7 +81,7 @@ private:
     // Pre: -
     // Post: Todos los nodos que se relacionan con el sustituido pasan a relacionarse solo con el sustituto.
     void sustituir_nodo(NodoABB<T, menor, igual>* sustituto, NodoABB<T, menor, igual>* sustituido);
->>>>>>> origin/main
+
 
 public:
     // Constructor.
@@ -352,42 +350,44 @@ void ABB<T, menor, igual>::postorder(NodoABB<T, menor, igual> *nodo_actual, std:
 }
 
 template<typename T, bool menor(T, T), bool igual(T, T)>
-<<<<<<< HEAD
 size_t ABB<T, menor, igual>::altura(){
     return altura(raiz);
 }
 
 template<typename T, bool menor(T, T), bool igual(T, T)>
-size_t ABB<T, menor, igual>::altura(NodoABB<T, menor, igual>* nodo){
-    size_t izq=0;
-    size_t der=0;
-    if (es_hoja(nodo)){
+size_t ABB<T, menor, igual>::altura(NodoABB<T, menor, igual>* nodo) {
+    size_t izq = 0;
+    size_t der = 0;
+    if (es_hoja(nodo)) {
         return 0;
     }
-    if(!(nodo->hijo_izquierdo==nullptr)){
-        izq = altura(nodo->hijo_izquierdo)+1;
+    if (!(nodo->hijo_izquierdo == nullptr)) {
+        izq = altura(nodo->hijo_izquierdo) + 1;
     }
-    if(!(nodo->hijo_derecho==nullptr)){
-        der = altura(nodo->hijo_derecho)+1;
+    if (!(nodo->hijo_derecho == nullptr)) {
+        der = altura(nodo->hijo_derecho) + 1;
     }
-    if (izq>der){
+    if (izq > der) {
         return izq;
-    }else{
+    } else {
         return der;
-=======
-void ABB<T, menor, igual>::baja(T dato) {
-    NodoABB<T, menor, igual>* nodo_baja = buscar_dato(raiz, dato);
-    if (nodo_baja != nullptr) {     
-        baja(dato, nodo_baja);
->>>>>>> origin/main
     }
 }
 
 template<typename T, bool menor(T, T), bool igual(T, T)>
-<<<<<<< HEAD
-bool ABB<T, menor, igual>::es_hoja(NodoABB<T, menor, igual>* nodo){
-    return (nodo->hijo_derecho==nullptr && nodo->hijo_izquierdo==nullptr);
-=======
+void ABB<T, menor, igual>::baja(T dato) {
+    NodoABB<T, menor, igual>* nodo_baja = buscar_dato(raiz, dato);
+    if (nodo_baja != nullptr) {     
+        baja(dato, nodo_baja);
+    }
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
+bool ABB<T, menor, igual>::es_hoja(NodoABB<T, menor, igual>* nodo) {
+    return (nodo->hijo_derecho == nullptr && nodo->hijo_izquierdo == nullptr);
+}
+
+template<typename T, bool menor(T, T), bool igual(T, T)>
 NodoABB<T, menor, igual>* ABB<T, menor, igual>::buscar_dato(NodoABB<T, menor, igual>* nodo_actual, T dato) {
     bool encontrado = false;
     NodoABB<T, menor, igual>* nodo_baja = nullptr;
@@ -499,7 +499,10 @@ void ABB<T, menor, igual>::ejecutar(void (*metodo)(T), NodoABB<T, menor, igual> 
         metodo(nodo_actual -> dato);
         ejecutar(metodo, nodo_actual -> hijo_derecho);
     }
->>>>>>> origin/main
+}
+
+#endif
+
 }
 
 #endif
