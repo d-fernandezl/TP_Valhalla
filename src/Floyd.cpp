@@ -25,7 +25,6 @@ std::vector<size_t> Floyd::reverse_vector(std::vector<size_t> vector_original) {
 std::vector<size_t> Floyd::obtener_camino(size_t origen, size_t destino) {
     std::vector<size_t> camino;
 
-    // TODO: Escribir el código necesario, haciendo uso de los métodos existentes.
     camino.push_back(destino);
     if (origen != destino) {
         while (matriz_caminos.elemento(origen, destino) != destino) {
@@ -46,7 +45,6 @@ Floyd::calcular_camino_minimo(Matriz adyacencia, size_t vertices, size_t origen,
         cantidad_vertices = vertices;
         inicializar_matrices();
 
-        // TODO: Escribir el código necesario, haciendo uso de los métodos existentes.
         for(size_t k = 0;k<cantidad_vertices;k++){ // K es tanto fila como columna
             for(size_t i = 0;i<cantidad_vertices;i++){ //i se usa como fila
                 for(size_t j=0;j<cantidad_vertices;j++){ //j se usa como columna
