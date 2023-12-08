@@ -6,9 +6,9 @@
 #include <random>
 #include "Grafo.hpp"
 
-const std::string JUGADOR = "J";
-const std::string PARED = "B";
-const std::string ENEMIGO = "P";
+const std::string JUGADOR = \U0001f575\uFE0F;//J
+const std::string PARED = \U0001f9f1;//B
+const std::string ENEMIGO = \U0001f480;//E
 const std::string VACIO = " ";
 
 const size_t FILAS = 9;
