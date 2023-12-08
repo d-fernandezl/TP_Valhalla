@@ -44,7 +44,11 @@ public:
     int obtener_columna();
     //Pre:
     //Post:
-    bool arma_esta_activa();
+    bool tiene_arma(); //arma_esta_activa
+
+    //Pre:
+    //Post: devuelve el numero de vertice
+    size_t obtener_posicion(Tablero& matriz);
 
     //Pre:
     //Post: Devuelve la altura del arbol
@@ -89,9 +93,8 @@ void Jugador<A,P,comp,menor,igual>::mover_jugador(std::string mov,Tablero& matri
         matriz.asignar_objeto(fila,columna,VACIO);
         fila = nueva_fila;
         columna = nueva_columna;
+        puntos+=10;
     }
-    std::cout<<"X:"<<columna<<std::endl;
-    std::cout<<"Y:"<<fila<<std::endl;
      
 }
 
@@ -111,7 +114,7 @@ int Jugador<A,P,comp,menor,igual>::obtener_columna(){
 }
 
 template<typename A,typename P,bool comp(A,A),bool menor(P,P),bool igual(P,P)>
-bool Jugador<A,P,comp,menor,igual>::arma_esta_activa(){
+bool Jugador<A,P,comp,menor,igual>::tiene_arma(){
     return arma_activa;
 }
 
@@ -135,6 +138,11 @@ void Jugador<A,P,comp,menor,igual>::volver_al_inicio(Tablero& matriz){
 template<typename A,typename P,bool comp(A,A),bool menor(P,P),bool igual(P,P)>
 void Jugador<A,P,comp,menor,igual>::agarrar_placa(P nueva_placa){
     arbol_placas.alta(nueva_placa);
+}
+
+template<typename A,typename P,bool comp(A,A),bool menor(P,P),bool igual(P,P)>
+size_t Jugador<A,P,comp,menor,igual>::obtener_posicion(Tablero& matriz){
+    return matriz.obtener_vertice(fila,columna);
 }
 
 #endif
